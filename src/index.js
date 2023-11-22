@@ -6,18 +6,20 @@ const app = express();
 // middleware: we customize the server
 app.use(express.urlencoded({ extended: true }));
 
-const publicPath = path.join(__dirname, '..', 'public');
-
 // what static files do we want to serve
+const publicPath = path.join(__dirname, '..', 'public');
+const viewsPath = path.join(__dirname, '..', 'templates');
+
+// configure our engine template
+app.set('view engine', 'hbs');
+app.set('views', viewsPath);
 app.use(express.static(publicPath));
 
-// ex : servir les pages suivantes
-
-// /about ==> page html
-// /help ==> page html
-
 app.get('', (req, res) => {
-  res.send('Kikoo');
+  res.render('index', {
+    name: 'Nissim',
+    role: 'Full stack developer',
+  });
 });
 
 app.get('/html', (req, res) => {
