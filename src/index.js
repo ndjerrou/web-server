@@ -1,9 +1,20 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
-// middleware: we customise the server
+// middleware: we customize the server
 app.use(express.urlencoded({ extended: true }));
+
+const publicPath = path.join(__dirname, '..', 'public');
+
+// what static files do we want to serve
+app.use(express.static(publicPath));
+
+// ex : servir les pages suivantes
+
+// /about ==> page html
+// /help ==> page html
 
 app.get('', (req, res) => {
   res.send('Kikoo');
