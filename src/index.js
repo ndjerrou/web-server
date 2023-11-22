@@ -2,6 +2,9 @@ const express = require('express');
 
 const app = express();
 
+// middleware: we customise the server
+app.use(express.urlencoded({ extended: true }));
+
 app.get('', (req, res) => {
   res.send('Kikoo');
 });
@@ -13,7 +16,7 @@ app.get('/html', (req, res) => {
 app.get('/signup', (req, res) => {
   res.send(`
     <h2>Création d'un compte</h2>
-    <form>
+    <form action="/thanks-you" method="POST">
         <div><label>Email :</label><input type='email' name='email' /></div>
         <div><label>Mdp :</label><input type='password' name='password' /></div>
         <button>Valider</button>
@@ -21,7 +24,13 @@ app.get('/signup', (req, res) => {
     `);
 });
 
-// Lors de la soumission du formulaire, on souhaite que le serveur nous dirige vers une autre page
+app.post('/thanks-you', (req, res) => {
+  //   req.on('data', data => {
+  //     console.log(data.toString('utf8'));
+  //   });
+
+  res.send(req.body);
+});
 
 app.get('/paul', (req, res) => {
   res.send('paul page');
